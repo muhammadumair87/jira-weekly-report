@@ -80,7 +80,7 @@ def main():
     <body style="font-family:Arial, sans-serif; background:#f4f6f8; padding:20px;">
     <div style="background:white; padding:20px; border-radius:8px;">
 
-    <h2 style="color:#172B4D;">Jira Weekly Status Report – {PROJECT_KEY}</h2>
+    <h2>Jira Weekly Status Report – {PROJECT_KEY} (STYLED VERSION)</h2>
     <p><strong>Generated:</strong> {datetime.now().strftime('%Y-%m-%d %H:%M')}</p>
 
     <hr>
