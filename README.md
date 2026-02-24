@@ -2,142 +2,175 @@
 
 Automated senior-level Jira reporting tool that generates a professional HTML email summary of project activity and sends it via Gmail.
 
-This script is designed for IT Managers, Security Leads, and DevOps professionals who need structured weekly reporting directly from Jira.
+This project is designed for IT Managers, Security Leads, and DevOps professionals who need structured weekly reporting directly from Jira.
 
 ---
 
 ## 🚀 Features
 
-- Fetches Jira issues via REST API
-- Generates executive-style HTML email report
-- Clickable Jira ticket keys (no raw URLs)
-- Weekly metrics:
-  - Issues Created
-  - Issues Resolved
-  - Total Open Issues
-- Secure environment variable handling
-- Gmail SMTP integration
-- Production-ready structure
+- ✅ Connects securely to Jira Cloud API
+- ✅ Fetches:
+  - Issues Created (Last 7 Days)
+  - Issues Resolved (Last 7 Days)
+  - Currently Open Issues
+- ✅ Generates executive-style HTML email
+- ✅ Sends report via Gmail SMTP
+- ✅ Fully automated with GitHub Actions
+- ✅ Secure secrets management (no credentials stored in repo)
+- ✅ Weekly scheduled execution
 
 ---
 
-## 🛠 Technologies Used
-
-- Python 3
-- Jira REST API v3
-- Gmail SMTP (App Password)
-- dotenv for secure configuration
-
----
-
-## 📂 Project Structure
-
-```
-jira-weekly-report/
-│
-├── main.py
-├── .env.example
-├── requirements.txt
-├── README.md
-└── .gitignore
-```
-
----
-
-## ⚙️ Setup Instructions
-
-### 1️⃣ Clone Repository
-
-```bash
-git clone https://github.com/yourusername/jira-weekly-report.git
-cd jira-weekly-report
-```
-
-### 2️⃣ Create Virtual Environment
-
-```bash
-python -m venv venv
-source venv/bin/activate   # Windows: venv\Scripts\activate
-```
-
-### 3️⃣ Install Dependencies
-
-```bash
-pip install -r requirements.txt
-```
-
-### 4️⃣ Configure Environment Variables
-
-Copy `.env.example` to `.env`:
-
-```bash
-cp .env.example .env
-```
-
-Edit `.env` and insert:
-
-- Jira email
-- Jira API token
-- Jira URL
-- Gmail App Password
-
----
-
-## 🔐 Security Notes
-
-- Never commit `.env` file
-- Use Gmail App Password (not real password)
-- Store Jira token securely
-- Rotate API tokens periodically
-
----
-
-## 📨 Example Output
+## 📸 Sample Report Output
 
 The email includes:
 
-- Executive summary
-- Weekly metrics
-- Clickable Jira ticket keys
-- Professional HTML formatting
+- Executive header section
+- Summary statistics
+- Created This Week section
+- Currently Open issues section
+- Clickable Jira issue links
+- Professional HTML layout
 
 ---
 
-## ⏰ Cron Job Automation (Linux Example)
+## 🏗 Project Structure
 
-```bash
-crontab -e
-```
+jira-weekly-report/
+│
+├── main.py # Core Jira report script
+├── requirements.txt # Python dependencies
+├── .github/
+│ └── workflows/
+│ └── jira-report.yml # GitHub Actions workflow
+├── .gitignore
+└── README.md
 
-Add:
 
-```bash
-0 9 * * MON /usr/bin/python3 /path/to/main.py >> /path/to/log.txt 2>&1
-```
-
-Runs every Monday at 09:00.
-
----
-
-## 📈 Future Improvements
-
-- SLA breach detection
-- Severity color coding
-- Trend comparison (week-over-week)
-- Embedded charts
-- Microsoft Teams integration
-- CI/CD pipeline integration
 
 ---
 
-## 👤 Author
+## 🔐 Required Secrets (GitHub Actions)
 
-Muhammad Ahsan  
-IT Automation & Security Enthusiast  
-Berlin, Germany
+Add the following secrets in:
+
+**Repository → Settings → Secrets → Actions**
+
+| Secret Name | Description |
+|------------|-------------|
+| `JIRA_EMAIL` | Your Jira account email |
+| `JIRA_TOKEN` | Jira API token |
+| `JIRA_URL` | Your Jira base URL (e.g. https://yourcompany.atlassian.net) |
+| `GMAIL_PASS` | Gmail App Password (16-character app password) |
+
+⚠ Do NOT include `JIRA_EMAIL=` inside the secret value.  
+Only paste the raw value.
 
 ---
 
-## 📜 License
+## ⚙️ GitHub Actions Workflow
 
-MIT License
+The workflow automatically runs:
+
+- Every Monday (scheduled)
+- Or manually via "Run workflow"
+
+Example cron configuration:
+
+```yaml
+on:
+  schedule:
+    - cron: '0 10 * * 1'   # Every Monday 10:00 UTC
+  workflow_dispatch:
+
+🐍 Local Development Setup
+
+Clone repository
+
+git clone https://github.com/yourusername/jira-weekly-report.git
+cd jira-weekly-report
+
+Install dependencies
+
+pip install -r requirements.txt
+
+Create .env file (for local testing only)
+
+JIRA_EMAIL=your_email
+JIRA_TOKEN=your_token
+JIRA_URL=https://yourcompany.atlassian.net
+GMAIL_PASS=your_gmail_app_password
+
+Run locally
+python main.py
+
+📧 Gmail Setup
+
+To use Gmail SMTP:
+
+Enable 2-Step Verification
+
+Generate App Password
+
+Use the 16-character app password as GMAIL_PASS
+
+SMTP configuration used:
+
+smtp.gmail.com
+Port: 465 (SSL)
+
+🔄 How It Works
+
+GitHub Action starts
+
+Python environment is prepared
+
+Secrets injected as environment variables
+
+Script calls Jira REST API
+
+HTML report is generated
+
+Email is sent securely via Gmail
+
+Workflow completes
+
+Technologies Used
+
+Python 3
+
+Jira Cloud REST API
+
+Requests library
+
+SMTP (Gmail SSL)
+
+GitHub Actions (CI/CD)
+
+HTML email templating
+
+Environment variable security
+
+Future Improvements (Optional)
+
+PDF attachment export
+
+CSV issue export
+
+Slack notification integration
+
+Confluence page publishing
+
+Multi-project support
+
+Executive KPI dashboard metrics
+
+🛡 Security Notes
+
+No credentials stored in repository
+
+All secrets managed via GitHub Actions
+
+.env excluded via .gitignore
+
+SMTP uses SSL encryption
