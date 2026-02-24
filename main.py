@@ -8,12 +8,18 @@ from datetime import datetime
 from dotenv import load_dotenv
 
 # Load configuration
+# Load configuration
 load_dotenv()
 
 JIRA_EMAIL = os.getenv("JIRA_EMAIL")
 JIRA_TOKEN = os.getenv("JIRA_TOKEN")
 JIRA_URL = os.getenv("JIRA_URL")
 GMAIL_PASS = os.getenv("GMAIL_PASS")
+
+print("JIRA_EMAIL:", JIRA_EMAIL)
+print("JIRA_URL:", JIRA_URL)
+print("GMAIL_PASS loaded:", bool(GMAIL_PASS))
+
 PROJECT_KEY = "KAN"
 
 
